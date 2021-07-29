@@ -1,7 +1,16 @@
 import supertest from "supertest";
-import app from "../../src/app";
+import { getConnection } from "typeorm";
+import app, {init} from "../../src/app";
 
-describe("GET /test", () => {
+beforeAll(async ()=>{
+  await init();
+});
+
+afterAll(async()=>{
+  await getConnection().close();
+})
+
+describe("GET /degrees", () => {
   it("should answer with text \"OK!\" and status 200", async () => {
     const response = await supertest(app).get("/test");
     expect(response.text).toBe("OK!");
