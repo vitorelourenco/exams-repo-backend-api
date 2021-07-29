@@ -5,6 +5,7 @@ import supertest from "supertest";
 import app from "../../src/app";
 import { getConnection } from "typeorm";
 import toMatchSchema from "../schemas/toMatchSchema";
+import {degreesArr} from "../schemas/degrees";
 
 beforeAll(async()=>{
   await init();
@@ -20,4 +21,10 @@ describe("GET /degrees", () => {
     const response = await agent.get("/degrees");
     expect(response.status).toBe(200);
   });
+
+  it("should answer an array of degrees", async () => {
+    const response = await agent.get("/degrees");
+    expect(response.body).toMatchSchema(degreesArr);
+  });
+
 });
