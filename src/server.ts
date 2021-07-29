@@ -1,5 +1,12 @@
-import app from "./app";
+import "./setup";
+import app, { init } from "./app";
 
-app.listen(4000, () => {
-  console.log(`Server is listening on port 4000.`);
-});
+const PORT = process.env.PORT;
+
+init()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server is listening on port ${PORT}.`);
+    });
+  })
+  .catch((err) => console.log(`Server failed to start \r\n`+err));
