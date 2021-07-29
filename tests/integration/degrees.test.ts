@@ -1,19 +1,23 @@
-import supertest from "supertest";
-import { getConnection } from "typeorm";
-import app, {init} from "../../src/app";
+import "../../src/setup";
 
-beforeAll(async ()=>{
+import {init} from "../../src/app";
+import supertest from "supertest";
+import app from "../../src/app";
+import { getConnection } from "typeorm";
+import toMatchSchema from "../schemas/toMatchSchema";
+
+beforeAll(async()=>{
   await init();
 });
-
 afterAll(async()=>{
   await getConnection().close();
-})
+});
+expect.extend({ toMatchSchema });
+const agent = supertest(app);
 
 describe("GET /degrees", () => {
   it("should answer with text \"OK!\" and status 200", async () => {
-    const response = await supertest(app).get("/test");
-    expect(response.text).toBe("OK!");
+    const response = await agent.get("/degrees");
     expect(response.status).toBe(200);
   });
 });
