@@ -1,4 +1,5 @@
 import "../../src/setup";
+import "../jestNamespace";
 
 import {init} from "../../src/app";
 import supertest from "supertest";
