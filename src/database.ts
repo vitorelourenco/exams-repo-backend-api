@@ -9,7 +9,7 @@ export default async function connect() {
     name: "default",
     type: "postgres",
     url: DATABASE_URL,
-    entities: [path.join(__dirname, '**', '*.entity.{ts,js}')],
+    entities: [path.join(__dirname, 'entities', '*.{ts,js}')],
     extra: {
       ssl: {
         rejectUnauthorized: false
