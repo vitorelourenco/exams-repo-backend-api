@@ -1,5 +1,5 @@
 import { getConnectionManager } from "typeorm";
-import path from 'path';
+import path from "path";
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -9,12 +9,12 @@ export default async function connect() {
     name: "default",
     type: "postgres",
     url: DATABASE_URL,
-    entities: [`${process.env.NODE_ENV === 'production' ? 'dist' : 'src'}/entities/*.*`],
+    entities: [path.join(__dirname, "entities", "*.{ts,js}")],
     extra: {
       ssl: {
-        rejectUnauthorized: false
-      }
-    }
+        rejectUnauthorized: false,
+      },
+    },
   });
   await connection.connect();
   return connection;
