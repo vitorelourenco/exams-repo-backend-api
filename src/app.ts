@@ -6,6 +6,7 @@ import cors from "cors";
 import connectDatabase from "./database";
 import degreesRouter from './routers/degreesRouter';
 import categoryRouter from "./routers/categoryRouter";
+import examsRouter from "./routers/examsRouter";
 
 export async function init(){
   await connectDatabase();
@@ -17,6 +18,6 @@ app.use(express.json());
 
 app.use("/degrees", degreesRouter);
 app.use("/categories", categoryRouter);
-
+app.use("/exams", examsRouter)
 
 export default app;
