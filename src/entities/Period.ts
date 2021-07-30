@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { OneToMany, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 import Course from "./Course";
 
-@Entity("degrees")
-export default class Degree{
+@Entity("periods")
+export default class Period{
   @PrimaryGeneratedColumn()
   id: number;
 
