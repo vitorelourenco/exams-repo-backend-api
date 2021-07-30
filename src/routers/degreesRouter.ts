@@ -1,9 +1,11 @@
 import { Router } from "express";
 import * as degreeController from "../controllers/degreeController";
 
-const degrees = Router();
+const degreesRouter = Router();
 
-degrees.get("/", degreeController.getAll);
-degrees.post("/", degreeController.create);
+degreesRouter.get("/", degreeController.getAll);
+degreesRouter.get("/drive/:degreeId", degreeController.getDriveInfo);
 
-export default degrees;
+degreesRouter.post("/", degreeController.create);
+
+export default degreesRouter;
