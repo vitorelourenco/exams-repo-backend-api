@@ -21,7 +21,7 @@ export async function create(req: Request, res: Response) {
     if (validationError) throw validationError;
 
     const { name } = req.body as NewDegree;
-    const result = await degreeServices.create({ name });
+    const result = await degreeServices.create({ name , courses:[]});
 
     res.status(201).send(result);
   } catch (err) {
