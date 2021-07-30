@@ -2,13 +2,12 @@ import "../../src/setup";
 import "../jestNamespace";
 
 import supertest from "supertest";
-import { getConnection, getRepository } from "typeorm";
+import { getConnection } from "typeorm";
 
 import { init } from "../../src/app";
 import app from "../../src/app";
 
 import Degree from "../../src/entities/Degree";
-
 
 import toMatchSchema from "../schemas/toMatchSchema";
 import { degreesArr } from "../schemas/degrees";
@@ -32,7 +31,10 @@ expect.extend({ toMatchSchema });
 const agent = supertest(app);
 
 describe("GET /degrees", () => {
-  beforeEach(async () => await clearDatabase());
+  beforeAll(async () => {
+    await clearDatabase();
+    await fillDatabase();
+  });
 
   it("should respond with status 200", async () => {
     const response = await agent.get("/degrees");
@@ -40,6 +42,23 @@ describe("GET /degrees", () => {
   });
 
   it("should respond with an array of degrees", async () => {
+    const response = await agent.get("/degrees");
+    expect(response.body).toMatchSchema(degreesArr);
+  });
+});
+
+describe("GET /degrees/drive/:degreeId", () => {
+  beforeAll(async () => {
+    await clearDatabase();
+    await fillDatabase();
+  });
+
+  it("should respond with status 200", async () => {
+    const response = await agent.get("/degrees/drive/1");
+    expect(response.status).toBe(200);
+  });
+
+  it("should respond with a a degree driove object", async () => {
     const response = await agent.get("/degrees");
     expect(response.body).toMatchSchema(degreesArr);
   });
