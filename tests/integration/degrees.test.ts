@@ -2,22 +2,29 @@ import "../../src/setup";
 import "../jestNamespace";
 
 import supertest from "supertest";
-import { getConnection } from "typeorm";
+import { getConnection, getRepository } from "typeorm";
 
 import { init } from "../../src/app";
 import app from "../../src/app";
+
 import Degree from "../../src/entities/Degree";
+
 
 import toMatchSchema from "../schemas/toMatchSchema";
 import { degreesArr } from "../schemas/degrees";
 
 import { FakeDegree } from "../factories/degreeFactory";
 
-import { getSalt } from "../utils/database";
+import { getSalt, clearDatabase } from "../utils/database";
 
 beforeAll(async () => {
   await init();
+
+  await clearDatabase();
+  
+
 });
+
 afterAll(async () => {
   await getConnection().close();
 });
@@ -25,6 +32,8 @@ expect.extend({ toMatchSchema });
 const agent = supertest(app);
 
 describe("GET /degrees", () => {
+  beforeEach(async () => await clearDatabase());
+
   it("should respond with status 200", async () => {
     const response = await agent.get("/degrees");
     expect(response.status).toBe(200);
@@ -37,6 +46,8 @@ describe("GET /degrees", () => {
 });
 
 describe("POST /degress", () => {
+  beforeEach(async () => await clearDatabase());
+
   it("should respond with status 201 when successful", async () => {
     const salt = await getSalt(Degree);
     const degree = new FakeDegree({ salt });

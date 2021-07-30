@@ -5,4 +5,4 @@ const degree = joi.object({
   id: joi.number().integer().min(1),
 });
 
-export const degreesArr = joi.array().items(degree.required());
+export const degreesArr = joi.array().items(degree);
