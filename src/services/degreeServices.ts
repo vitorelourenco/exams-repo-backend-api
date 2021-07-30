@@ -14,7 +14,7 @@ export async function create(degree: CreateDegree) {
 }
 
 export async function getDriveInfo(degreeId: number) {
-  const drive = await getRepository(Degree).find({
+  const drive = await getRepository(Degree).findOne({
     where: { id: degreeId },
     relations: [
       "courses",

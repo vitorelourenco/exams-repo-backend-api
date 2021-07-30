@@ -5,6 +5,7 @@ const degreesRouter = Router();
 
 degreesRouter.get("/", degreeController.getAll);
 degreesRouter.get("/drive/:degreeId", degreeController.getDriveInfo);
+
 degreesRouter.post("/", degreeController.create);
 
 export default degreesRouter;
