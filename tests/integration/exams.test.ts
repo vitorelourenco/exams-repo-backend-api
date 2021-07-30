@@ -32,7 +32,10 @@ expect.extend({ toMatchSchema });
 const agent = supertest(app);
 
 describe("POST /exams", () => {
-  beforeEach(async () => await clearDatabase());
+  beforeEach(async () => {
+    await clearDatabase();
+    await fillDatabase();
+  });
 
   it("should respond with status 201 when successful", async () => {
     const exam:ReceivedExam = {name:"test", degreeId:1, categoryId:1, instructorId:1, fileLink:"https://www.youtube.com/", courseId:1}
