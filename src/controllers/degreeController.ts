@@ -15,6 +15,17 @@ export async function getAll(req: Request, res: Response) {
   }
 }
 
+export async function getDriveInfo(req: Request, res:Response){
+  try {
+    const degreeId = parseInt(req.params.degreeId);
+    const drive = await degreeServices.getDriveInfo(degreeId);
+    res.send(drive);
+  } catch (err) {
+    console.error(err.message);
+    res.sendStatus(500);
+  }
+}
+
 export async function create(req: Request, res: Response) {
   try {
     const { error:validationError } = newDegreeSchema.validate(req.body);
