@@ -15,17 +15,17 @@ import { degreesArr } from "../schemas/degrees";
 
 import { FakeDegree } from "../factories/degreeFactory";
 
-import { getSalt, clearDatabase } from "../utils/database";
+import { getSalt, clearDatabase, fillDatabase } from "../utils/database";
 
 beforeAll(async () => {
   await init();
-
   await clearDatabase();
-  
-
+  await fillDatabase();
 });
 
 afterAll(async () => {
+  await clearDatabase();
+  await fillDatabase();
   await getConnection().close();
 });
 expect.extend({ toMatchSchema });
