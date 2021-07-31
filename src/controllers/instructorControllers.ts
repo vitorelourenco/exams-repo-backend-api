@@ -6,11 +6,11 @@ import * as idSchemas from '../schemas/id';
 export async function getWith(req: Request, res: Response) {
   try {
     
-    const paramCourseId = req.params.courseId;
-    const {error: joiError} = idSchemas.id.validate(paramCourseId)
+    const paramDegreeId = req.params.degreeId;
+    const {error: joiError} = idSchemas.id.validate(paramDegreeId)
     if (joiError) throw joiError;
-    const courseId = parseInt(paramCourseId.toString());
-    const instructors = await instructorServices.getWith(courseId);
+    const degreeId = parseInt(paramDegreeId.toString());
+    const instructors = await instructorServices.getWith(degreeId);
     res.send(instructors);
   } catch (err) {
     console.error(err.message);

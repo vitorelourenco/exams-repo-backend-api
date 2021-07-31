@@ -1,7 +1,15 @@
 import { getRepository } from "typeorm";
 import Course from "../entities/Course";
+import Degree from "../entities/Degree";
 
-export async function getWith(courseId:number) {
-  const courses = await getRepository(Course).findOne({where:{id:courseId}, relations:["instructors","instructors.exams"]});
-  return courses.instructors;
+export async function getWith(degreeId: number) {
+  const degree = await getRepository(Degree).findOne({
+    where: { id: degreeId },
+    relations: ["courses", "courses.instructors", "courses.instructors.exams"],
+  });
+  const instructors = degree.courses.reduce((acc, course) => {
+    acc.push(...course.instructors);
+    return acc;
+  } ,[])
+  return instructors;
 }

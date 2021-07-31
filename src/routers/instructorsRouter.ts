@@ -3,6 +3,6 @@ import * as instructorControllers from "../controllers/instructorControllers";
 
 const instructorsRouter = Router();
 
-instructorsRouter.get("/:courseId", instructorControllers.getWith);
+instructorsRouter.get("/:degreeId", instructorControllers.getWith);
 
 export default instructorsRouter;
