@@ -7,15 +7,10 @@ import { getConnection } from "typeorm";
 import { init } from "../../src/app";
 import app from "../../src/app";
 
-import Degree from "../../src/entities/Degree";
-
 import toMatchSchema from "../schemas/toMatchSchema";
-import { degreesArr } from "../schemas/degrees";
 
-import { FakeDegree } from "../factories/degreeFactory";
-
-import { getSalt, clearDatabase, fillDatabase } from "../utils/database";
-import CreateExam, { ReceivedExam } from "../../src/protocols/CreateExam";
+import { clearDatabase, fillDatabase } from "../utils/database";
+import { ReceivedExam } from "../../src/protocols/CreateExam";
 
 beforeAll(async () => {
   await init();
