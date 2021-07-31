@@ -62,7 +62,21 @@ export async function getWithInstructorIdByCategory(instructorId: number) {
     .leftJoinAndSelect("category.exams", "exam")
     .leftJoinAndSelect("exam.instructor", "instructor")
     .leftJoinAndSelect("exam.course", "course")
+    .leftJoinAndSelect("course.degree", "degree")
     .where("exam.instructor = :instructorId",{instructorId:instructorId})
+    .getMany();
+
+  return categories;
+}
+
+export async function getWithCourseIdByCategory(courseId: number) {
+  const categories = await getRepository(Category)
+    .createQueryBuilder("category")
+    .leftJoinAndSelect("category.exams", "exam")
+    .leftJoinAndSelect("exam.instructor", "instructor")
+    .leftJoinAndSelect("exam.course", "course")
+    .leftJoinAndSelect("course.degree", "degree")
+    .where("exam.course = :courseId",{courseId:courseId})
     .getMany();
 
   return categories;
