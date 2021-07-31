@@ -9,6 +9,6 @@ export default class Period{
   @Column()
   name: string;
 
-  @OneToMany(() => Course, course => course.degree)
+  @OneToMany(() => Course, course => course.period)
   courses: Course[];
 }
