@@ -5,10 +5,11 @@ import cors from "cors";
 
 import connectDatabase from "./database";
 import degreesRouter from './routers/degreesRouter';
-import categoryRouter from "./routers/categoryRouter";
+import categoryRouter from "./routers/categoriesRouter";
 import examsRouter from "./routers/examsRouter";
 import signRouter from "./routers/signRouter";
 import instructorsRouter from './routers/instructorsRouter';
+import coursesRouter from "./routers/coursesRouter";
 
 export async function init(){
   await connectDatabase();
@@ -23,5 +24,6 @@ app.use("/categories", categoryRouter);
 app.use("/exams", examsRouter)
 app.use("/sign-s3", signRouter)
 app.use("/instructors", instructorsRouter);
+app.use("/courses", coursesRouter)
 
 export default app;
