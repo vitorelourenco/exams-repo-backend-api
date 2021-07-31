@@ -4,6 +4,7 @@ import { newExamSchema } from "../schemas/exams";
 import NewExam,{ReceivedExam} from "../protocols/CreateExam";
 import { QueryFailedError } from "typeorm";
 import { ValidationError } from "joi";
+import * as idSchemas from '../schemas/id';
 
 export async function create(req: Request, res: Response) {
   try {
@@ -30,5 +31,62 @@ export async function create(req: Request, res: Response) {
     }
 
     return res.sendStatus(500);
+  }
+}
+
+export async function getWithInstructor(req:Request, res:Response){
+  try {
+    const paramInstructorId = req.params.instructorId;
+    const {error: joiError} = idSchemas.id.validate(paramInstructorId)
+    if (joiError) throw joiError;
+    const instructorId = parseInt(paramInstructorId.toString());
+    const exams = await examServices.getWithInstructorId(instructorId);
+    res.send(exams);
+  } catch (err) {
+    console.error(err.message);
+
+    if (err instanceof ValidationError) {
+      return res.status(400).send(err.message + " => " + err._original);
+    }
+    
+    res.sendStatus(500);
+  }
+}
+
+export async function getWithInstructorByPeriod(req:Request, res:Response){
+  try {
+    const paramInstructorId = req.params.instructorId;
+    const {error: joiError} = idSchemas.id.validate(paramInstructorId)
+    if (joiError) throw joiError;
+    const instructorId = parseInt(paramInstructorId.toString());
+    const exams = await examServices.getWithInstructorIdByPeriod(instructorId);
+    res.send(exams);
+  } catch (err) {
+    console.error(err.message);
+
+    if (err instanceof ValidationError) {
+      return res.status(400).send(err.message + " => " + err._original);
+    }
+    
+    res.sendStatus(500);
+  }
+}
+
+export async function getWithInstructorByCategory(req:Request, res:Response){
+  try {
+    const paramInstructorId = req.params.instructorId;
+    const {error: joiError} = idSchemas.id.validate(paramInstructorId)
+    if (joiError) throw joiError;
+    const instructorId = parseInt(paramInstructorId.toString());
+    const exams = await examServices.getWithInstructorIdByCategory(instructorId);
+    res.send(exams);
+  } catch (err) {
+    console.error(err.message);
+
+    if (err instanceof ValidationError) {
+      return res.status(400).send(err.message + " => " + err._original);
+    }
+    
+    res.sendStatus(500);
   }
 }
