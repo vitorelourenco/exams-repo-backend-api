@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as degreeController from "../controllers/degreeController";
+import * as degreeController from "../controllers/degreeControllers";
 
 const degreesRouter = Router();
 
