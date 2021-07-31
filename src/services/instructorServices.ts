@@ -1,5 +1,4 @@
 import { getRepository } from "typeorm";
-import Course from "../entities/Course";
 import Degree from "../entities/Degree";
 
 export async function getWith(degreeId: number) {
