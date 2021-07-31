@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import * as instructorServices from "../services/instructorServices";
 import { ValidationError } from "joi";
-import * as instructorsSchemas from '../schemas/instructors';
+import * as idSchemas from '../schemas/id';
 
 export async function getWith(req: Request, res: Response) {
   try {
     
     const paramCourseId = req.params.courseId;
-    const {error: joiError} = instructorsSchemas.queryCourseId.validate(paramCourseId)
+    const {error: joiError} = idSchemas.id.validate(paramCourseId)
     if (joiError) throw joiError;
     const courseId = parseInt(paramCourseId.toString());
     const instructors = await instructorServices.getWith(courseId);

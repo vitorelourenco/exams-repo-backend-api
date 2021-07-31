@@ -18,3 +18,8 @@ export async function create(receivedExam: ReceivedExam) {
   await getRepository(Exam).save(newExam);
   return newExam;
 }
+
+export async function getWithInstructorId(instructorId:number){
+  const exams = await getRepository(Exam).find({where:{instructor:instructorId}, relations:["instructor","course","category"]});
+  return exams;
+}

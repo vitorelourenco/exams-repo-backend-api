@@ -4,6 +4,6 @@ import * as examController from "../controllers/examControllers";
 const examsRouter = Router();
 
 examsRouter.post("/", examController.create);
-examsRouter.get("/")
+examsRouter.get("/instructor/:instructorId", examController.getWithInstructor);
 
 export default examsRouter;
