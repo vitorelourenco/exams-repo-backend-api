@@ -14,7 +14,8 @@ import { degreesArr } from "../schemas/degrees";
 
 import { FakeDegree } from "../factories/degreeFactory";
 
-import { getSalt, clearDatabase, fillDatabase } from "../utils/database";
+import { clearDatabase, fillDatabase } from "../utils/database";
+import {getSalt} from "../../src/utils/database";
 
 beforeAll(async () => {
   await init();
