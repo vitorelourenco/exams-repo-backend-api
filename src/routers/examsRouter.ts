@@ -5,8 +5,6 @@ const examsRouter = Router();
 
 examsRouter.post("/", examController.create);
 
-examsRouter.get("/instructor/:instructorId", examController.getWithInstructor);
-
 examsRouter.get("/instructor/:instructorId/byCategory", examController.getWithInstructorIdByCategory);
 
 examsRouter.get("/course/:courseId/byCategory", examController.getWithCourseIdByCategory);

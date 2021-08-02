@@ -34,14 +34,6 @@ export async function create(receivedExam: ReceivedExam) {
   return newExam;
 }
 
-export async function getWithInstructorId(instructorId: number) {
-  const exams = await getRepository(Exam).find({
-    where: { instructor: instructorId },
-    relations: ["instructor", "course", "category"],
-  });
-  return exams;
-}
-
 export async function getWithInstructorIdByCategory(instructorId: number) {
   const categories = await getRepository(Category)
     .createQueryBuilder("category")

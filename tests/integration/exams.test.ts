@@ -45,3 +45,32 @@ describe("POST /exams", () => {
   });
 
 });
+
+describe("GET /exams/instructor/:instructorId/byCategory", () => {
+  const BASE_ROUTE = "exams/instructor/:instructorId/byCategory"
+
+  beforeEach(async () => {
+    await clearDatabase();
+    await fillDatabase();
+  });
+
+  it("should respond with status 200", async () => {
+    const response = await agent.get("exams/instructor/1/byCategory");
+    expect(response.status).toBe(200);
+  });
+});
+
+describe("GET /exams/course/:courseId/byCategory", () => {
+  const BASE_ROUTE = "exams/instructor/:instructorId/byCategory"
+
+  beforeEach(async () => {
+    await clearDatabase();
+    await fillDatabase();
+  });
+
+  it("should respond with status 200", async () => {
+    const response = await agent.get("/exams/course/1/byCategory");
+    expect(response.status).toBe(200);
+  });
+});
+
