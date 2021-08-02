@@ -4,7 +4,6 @@ import Course from "../entities/Course";
 import Degree from "../entities/Degree";
 import Exam from "../entities/Exam";
 import Instructor from "../entities/Instructor";
-import Period from "../entities/Period";
 import CreateExam, { ReceivedExam } from "../protocols/CreateExam";
 
 export async function create(receivedExam: ReceivedExam) {
@@ -40,19 +39,6 @@ export async function getWithInstructorId(instructorId: number) {
     where: { instructor: instructorId },
     relations: ["instructor", "course", "category"],
   });
-  return exams;
-}
-
-export async function getWithInstructorIdByPeriod(instructorId: number) {
-  const exams = await getRepository(Period)
-    .createQueryBuilder("period")
-    .leftJoinAndSelect("period.courses", "course")
-    .leftJoinAndSelect("course.degree", "degree")
-    .leftJoinAndSelect("course.exams", "exam")
-    .leftJoinAndSelect("exam.instructor", "instructor")
-    .where("exam.instructor = :instructorId",{instructorId:instructorId})
-    .getMany();
-
   return exams;
 }
 
