@@ -26,7 +26,6 @@ expect.extend({ toMatchSchema });
 const agent = supertest(app);
 
 describe("GET /courses/:degreeId/byPeriod", () => {
-  const BASE_ROUTE = "/courses"
 
   beforeEach(async () => {
     await clearDatabase();

@@ -11,11 +11,7 @@ import toMatchSchema from "../schemas/toMatchSchema";
 
 import { clearDatabase, fillDatabase } from "../utils/database";
 import { ReceivedExam } from "../../src/protocols/CreateExam";
-import Degree from "../../src/entities/Degree";
-import { createCourse } from "../factories/courseFactory";
-import Instructor from "../../src/entities/Instructor";
-import Period from "../../src/entities/Period";
-import Exam from "../../src/entities/Exam";
+import { examsByCategorySchema } from "../schemas/exams";
 
 beforeAll(async () => {
   await init();
@@ -49,6 +45,13 @@ describe("POST /exams", () => {
     expect(response.status).toBe(400);
   });
 
+  it("should respond with status 404 when param is not found", async () => {
+    const exam:ReceivedExam = {name:"test", degreeId:2147483647, categoryId:2147483647, instructorId:2147483647, fileLink:"https://www.youtube.com/", courseId:1}
+    const response = await agent.post(`/exams`).send(exam);
+    expect(response.status).toBe(404);
+  });
+
+
 });
 
 describe("GET /exams/instructor/:instructorId/byCategory", () => {
@@ -59,9 +62,18 @@ describe("GET /exams/instructor/:instructorId/byCategory", () => {
   });
 
   it("should respond with status 200", async () => {
-    const instructor = await getRepository(Instructor).findOne();
-    const response = await agent.get(`/exams/instructor/${instructor.id}/byCategory`);
+    const response = await agent.get(`/exams/instructor/1/byCategory`);
     expect(response.status).toBe(200);
+  });
+
+  it("should respond with status 404 when instructorId is not found", async () => {
+    const response = await agent.get(`/exams/instructor/2147483647/byCategory`);
+    expect(response.status).toBe(404);
+  });
+
+  it("should respond with an exams nested in categories object", async () => {
+    const response = await agent.get(`/exams/course/1/byCategory`);
+    expect(response.body).toMatchSchema(examsByCategorySchema);
   });
 });
 
@@ -73,14 +85,19 @@ describe("GET /exams/course/:courseId/byCategory", () => {
   });
 
   it("should respond with status 200", async () => {
-    const degrees = await getRepository(Degree).find();
-    const instructors = await getRepository(Instructor).find();
-    const periods = await getRepository(Period).find();
-    const name = "test";
-    const exams: Exam[] = [];
-    const course = await createCourse({name, instructors, degrees, periods, exams });
-    const response = await agent.get(`/exams/course/${course.id}/byCategory`);
+    const response = await agent.get(`/exams/course/1/byCategory`);
     expect(response.status).toBe(200);
   });
+
+  it("should respond with status 404 when courseId is not found", async () => {
+    const response = await agent.get(`/exams/course/2147483647/byCategory`);
+    expect(response.status).toBe(404);
+  });
+
+  it("should respond with an exams nested in categories object", async () => {
+    const response = await agent.get(`/exams/course/1/byCategory`);
+    expect(response.body).toMatchSchema(examsByCategorySchema);
+  });
+  
 });
 
