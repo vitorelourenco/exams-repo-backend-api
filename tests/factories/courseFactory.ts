@@ -13,7 +13,7 @@ export async function createCourse(params:{name:string, instructors:Instructor[]
     name,
     period: helpers.randomOf(periods),
     degree: helpers.randomOf(degrees),
-    instructors,
+    instructors: [helpers.randomOf(instructors)],
     exams,
   } as CreateCourse);
   await getRepository(Course).save(course);

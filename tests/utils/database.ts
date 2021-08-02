@@ -11,6 +11,8 @@ import CreatePeriod from "../../src/protocols/CreatePeriod";
 import { createExam } from "../factories/examFactory";
 import { createCourse } from "../factories/courseFactory";
 import * as helpers from './helpers';
+import faker from 'faker';
+import { createInstructor } from "../factories/instructorFactory";
 
 export async function clearDatabase() {
   const connection = getConnection();
@@ -221,27 +223,10 @@ async function fillDegrees(){
 async function fillInstructors(){
   const instructors = [];
 
-  const firstInstructor = getRepository(Instructor).create({
-    name: "Protasio",
-    exams: [],
-  } as CreateInstructor);
-  await getRepository(Instructor).save(firstInstructor);
-
-  const secondInstructor = getRepository(Instructor).create({
-    name: "Sanglard",
-    exams: [],
-  } as CreateInstructor);
-  await getRepository(Instructor).save(secondInstructor);
-
-  const thirdInstructor = getRepository(Instructor).create({
-    name: "Luiz Felipe",
-    exams: [],
-  } as CreateInstructor);
-  await getRepository(Instructor).save(thirdInstructor);
-
-  instructors.push(firstInstructor);
-  instructors.push(secondInstructor);
-  instructors.push(thirdInstructor);
+  for(let i=0; i<8; i++){
+    const instructor = await createInstructor(faker.name.findName());
+    instructors.push(instructor);
+  }
 
   return instructors
 }
