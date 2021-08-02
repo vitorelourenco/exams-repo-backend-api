@@ -2,7 +2,7 @@ import "../../src/setup";
 import "../jestNamespace";
 
 import supertest from "supertest";
-import { getConnection } from "typeorm";
+import { getConnection, getRepository } from "typeorm";
 
 import { init } from "../../src/app";
 import app from "../../src/app";
@@ -11,6 +11,11 @@ import toMatchSchema from "../schemas/toMatchSchema";
 
 import { clearDatabase, fillDatabase } from "../utils/database";
 import { ReceivedExam } from "../../src/protocols/CreateExam";
+import Degree from "../../src/entities/Degree";
+import { createCourse } from "../factories/courseFactory";
+import Instructor from "../../src/entities/Instructor";
+import Period from "../../src/entities/Period";
+import Exam from "../../src/entities/Exam";
 
 beforeAll(async () => {
   await init();
@@ -47,7 +52,6 @@ describe("POST /exams", () => {
 });
 
 describe("GET /exams/instructor/:instructorId/byCategory", () => {
-  const BASE_ROUTE = "exams/instructor/:instructorId/byCategory"
 
   beforeEach(async () => {
     await clearDatabase();
@@ -55,13 +59,13 @@ describe("GET /exams/instructor/:instructorId/byCategory", () => {
   });
 
   it("should respond with status 200", async () => {
-    const response = await agent.get("exams/instructor/1/byCategory");
+    const instructor = await getRepository(Instructor).findOne();
+    const response = await agent.get(`/exams/instructor/${instructor.id}/byCategory`);
     expect(response.status).toBe(200);
   });
 });
 
 describe("GET /exams/course/:courseId/byCategory", () => {
-  const BASE_ROUTE = "exams/instructor/:instructorId/byCategory"
 
   beforeEach(async () => {
     await clearDatabase();
@@ -69,7 +73,13 @@ describe("GET /exams/course/:courseId/byCategory", () => {
   });
 
   it("should respond with status 200", async () => {
-    const response = await agent.get("/exams/course/1/byCategory");
+    const degrees = await getRepository(Degree).find();
+    const instructors = await getRepository(Instructor).find();
+    const periods = await getRepository(Period).find();
+    const name = "test";
+    const exams: Exam[] = [];
+    const course = await createCourse({name, instructors, degrees, periods, exams });
+    const response = await agent.get(`/exams/course/${course.id}/byCategory`);
     expect(response.status).toBe(200);
   });
 });
