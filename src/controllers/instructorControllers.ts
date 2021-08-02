@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as instructorServices from "../services/instructorServices";
 import { ValidationError } from "joi";
 import * as idSchemas from '../schemas/id';
+import { DeepValidationError } from "../utils/errors";
 
 export async function getWith(req: Request, res: Response) {
   try {
@@ -19,6 +20,10 @@ export async function getWith(req: Request, res: Response) {
       return res.status(400).send(err.message + " => " + err._original);
     }
     
+    if (err instanceof DeepValidationError){
+      return res.status(err.code).send(err.message + " => " + err.detail)
+    }
+
     res.sendStatus(500);
   }
 }

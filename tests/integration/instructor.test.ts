@@ -35,5 +35,10 @@ describe("GET /instructors/:degreeId", () => {
     const response = await agent.get("/instructors/1");
     expect(response.status).toBe(200);
   });
+
+  it("should respond with status 404 for degreeId not found", async () => {
+    const response = await agent.get("/instructors/2147483647");
+    expect(response.status).toBe(404);
+  });
 });
 
