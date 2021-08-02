@@ -1,11 +1,12 @@
-import { getRepository } from "typeorm";
+import { ValidationError } from "joi";
+import { getRepository, Repository } from "typeorm";
 import Category from "../entities/Category";
 import Course from "../entities/Course";
 import Degree from "../entities/Degree";
 import Exam from "../entities/Exam";
 import Instructor from "../entities/Instructor";
-import Period from "../entities/Period";
 import CreateExam, { ReceivedExam } from "../protocols/CreateExam";
+import { DeepValidationError } from "../utils/errors";
 
 export async function create(receivedExam: ReceivedExam) {
   const degree = await getRepository(Degree).findOne({
@@ -35,28 +36,10 @@ export async function create(receivedExam: ReceivedExam) {
   return newExam;
 }
 
-export async function getWithInstructorId(instructorId: number) {
-  const exams = await getRepository(Exam).find({
-    where: { instructor: instructorId },
-    relations: ["instructor", "course", "category"],
-  });
-  return exams;
-}
-
-export async function getWithInstructorIdByPeriod(instructorId: number) {
-  const exams = await getRepository(Period)
-    .createQueryBuilder("period")
-    .leftJoinAndSelect("period.courses", "course")
-    .leftJoinAndSelect("course.degree", "degree")
-    .leftJoinAndSelect("course.exams", "exam")
-    .leftJoinAndSelect("exam.instructor", "instructor")
-    .where("exam.instructor = :instructorId",{instructorId:instructorId})
-    .getMany();
-
-  return exams;
-}
-
 export async function getWithInstructorIdByCategory(instructorId: number) {
+  const instructor = await getRepository(Instructor).findOne({where:{id:instructorId}});
+  if(!instructor) throw new DeepValidationError(404,`Invalid Request`,`instructorId=${instructorId} not found`)
+  
   const categories = await getRepository(Category)
     .createQueryBuilder("category")
     .leftJoinAndSelect("category.exams", "exam")
@@ -70,6 +53,9 @@ export async function getWithInstructorIdByCategory(instructorId: number) {
 }
 
 export async function getWithCourseIdByCategory(courseId: number) {
+  const course = await getRepository(Course).findOne({where:{id:courseId}});
+  if(!course) throw new DeepValidationError(404,`Invalid Request`,`instructorId=${courseId} not found`)
+
   const categories = await getRepository(Category)
     .createQueryBuilder("category")
     .leftJoinAndSelect("category.exams", "exam")

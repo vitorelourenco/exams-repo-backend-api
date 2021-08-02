@@ -13,7 +13,7 @@ export async function signS3(fileName:any, fileType:any) {
   const promise = new Promise((resolve, reject)=>{
     s3.getSignedUrl('putObject', s3Params, (err, data) => {
       if(err){
-        console.log(err);
+        console.error(err);
         throw(err);
       }
       const returnData = {

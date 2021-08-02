@@ -10,7 +10,7 @@ import app from "../../src/app";
 import Degree from "../../src/entities/Degree";
 
 import toMatchSchema from "../schemas/toMatchSchema";
-import { degreesArr } from "../schemas/degrees";
+import { degreesArr,degreeDrive } from "../schemas/degrees";
 
 import { FakeDegree } from "../factories/degreeFactory";
 
@@ -59,9 +59,9 @@ describe("GET /degrees/drive/:degreeId", () => {
     expect(response.status).toBe(200);
   });
 
-  it("should respond with a a degree driove object", async () => {
+  it("should respond with a degree drive object", async () => {
     const response = await agent.get("/degrees");
-    expect(response.body).toMatchSchema(degreesArr);
+    expect(response.body).toMatchSchema(degreeDrive);
   });
 });
 
