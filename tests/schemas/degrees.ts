@@ -7,8 +7,9 @@ const degree = joi.object({
 
 export const degreesArr = joi.array().items(degree);
 
-export const degreeDrive = joi.object({
+export const degreeDrive = joi.array().items(joi.object({
   name: joi.string().min(1).required(),
   id: joi.number().integer().min(1).required(),
-  courses: joi.array().required()
-});
+  courses: joi.array()
+}));
+
