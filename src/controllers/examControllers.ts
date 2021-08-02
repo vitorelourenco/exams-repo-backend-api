@@ -19,7 +19,6 @@ export async function create(req: Request, res: Response) {
     res.status(201).send(result);
   } catch (err) {
     console.error(err.message);
-    console.debug(err);
     if (err instanceof ValidationError) {
       return res.status(400).send(err.message + " => " + err._original);
     }

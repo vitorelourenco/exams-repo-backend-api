@@ -36,5 +36,10 @@ describe("GET /courses/:degreeId/byPeriod", () => {
     const response = await agent.get("/courses/1/byPeriod");
     expect(response.status).toBe(200);
   });
+
+  it("should respond with status 404 for degreeId not found", async () => {
+    const response = await agent.get("/courses/2147483647/byPeriod");
+    expect(response.status).toBe(404);
+  });
 });
 
