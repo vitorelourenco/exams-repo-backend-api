@@ -4,14 +4,13 @@ import Degree from "../../src/entities/Degree";
 import CreateDegree from "../../src/protocols/CreateDegree";
 import Category from "../../src/entities/Category";
 import CreateCategory from "../../src/protocols/CreateCategory";
-import Course from "../../src/entities/Course";
-import CreateCourse from "../../src/protocols/CreateCourse";
-import Exam from "../../src/entities/Exam";
-import CreateExam from "../../src/protocols/CreateExam";
 import Instructor from "../../src/entities/Instructor";
 import CreateInstructor from "../../src/protocols/CreateInstructor";
 import Period from "../../src/entities/Period";
 import CreatePeriod from "../../src/protocols/CreatePeriod";
+import { createExam } from "../factories/examFactory";
+import { createCourse } from "../factories/courseFactory";
+import * as helpers from './helpers';
 
 export async function clearDatabase() {
   const connection = getConnection();
@@ -34,13 +33,44 @@ export async function clearDatabase() {
   await connection.query(`ALTER SEQUENCE degrees_id_seq RESTART WITH 1`);
 }
 
+
+
 export async function fillDatabase() {
-  const newDegree = getRepository(Degree).create({
-    name: "Engenharia Naval",
-    courses: [],
-  } as CreateDegree);
-  await getRepository(Degree).save(newDegree);
-//////////////////////////////////////////////////////
+  const categories = await fillCategories() as Category[];
+  const periods = await fillPeriods() as Period[];
+  const degrees = await fillDegrees() as Degree[];
+  const instructors = await fillInstructors() as Instructor[];
+  const courses = await fillCourses({instructors, degrees, periods});
+
+
+  await createExam({name:"2015.1",course:helpers.randomOf(courses),categories,fileLink:"https://www.youtube.com/watch?v=oavMtUWDBTM"})
+  await createExam({name:"2013.1",course:helpers.randomOf(courses),categories,fileLink:"https://www.youtube.com/watch?v=oavMtUWDBTM"})
+  await createExam({name:"2018.2",course:helpers.randomOf(courses),categories,fileLink:"https://www.youtube.com/watch?v=oavMtUWDBTM"})
+  await createExam({name:"2012.2",course:helpers.randomOf(courses),categories,fileLink:"https://www.youtube.com/watch?v=oavMtUWDBTM"})
+  await createExam({name:"2017.1",course:helpers.randomOf(courses),categories,fileLink:"https://www.youtube.com/watch?v=oavMtUWDBTM"})
+}
+
+async function fillCourses(params:{instructors:Instructor[], degrees:Degree[], periods:Period[]}){
+  const {instructors, degrees, periods} = params;
+  const courses = []
+  const course1 = await createCourse({name:"Calculo 1",instructors, degrees, periods, exams:[]})
+  const course2 = await createCourse({name:"Fisica 1",instructors, degrees, periods, exams:[]})
+  const course3 = await createCourse({name:"Introducao ao Meio Ambiente",instructors, degrees, periods, exams:[]})
+  const course4 = await createCourse({name:"Fisica 2",instructors, degrees, periods, exams:[]})
+  const course5 = await createCourse({name:"Calculo 4",instructors, degrees, periods, exams:[]})
+  
+  courses.push(course1);
+  courses.push(course2);
+  courses.push(course3);
+  courses.push(course4);
+  courses.push(course5);
+
+  return courses;
+}
+
+async function fillCategories(){
+  const categories = [];
+
   const p1Category = getRepository(Category).create({
     name: "P1",
     exams: [],
@@ -70,25 +100,19 @@ export async function fillDatabase() {
     exams: [],
   } as CreateCategory);
   await getRepository(Category).save(OthersCategory);
-//////////////////////////////////////////////////////
-  const firstInstructor = getRepository(Instructor).create({
-    name: "Protasio",
-    exams: [],
-  } as CreateInstructor);
-  await getRepository(Instructor).save(firstInstructor);
 
-  const secondInstructor = getRepository(Instructor).create({
-    name: "Sanglard",
-    exams: [],
-  } as CreateInstructor);
-  await getRepository(Instructor).save(secondInstructor);
+  categories.push(p1Category);
+  categories.push(p2Category);
+  categories.push(p3Category);
+  categories.push(SecondChCategory);
+  categories.push(OthersCategory);
 
-  const thirdInstructor = getRepository(Instructor).create({
-    name: "Luiz Felipe",
-    exams: [],
-  } as CreateInstructor);
-  await getRepository(Instructor).save(thirdInstructor);
-//////////////////////////////////////////////////////
+  return categories
+}
+
+async function fillPeriods(){
+  const periods = [];
+
   const firstPeriod = getRepository(Period).create({
     name: "1o",
     courses: [],
@@ -154,51 +178,70 @@ export async function fillDatabase() {
     courses: [],
   } as CreatePeriod);
   await getRepository(Period).save(optionalPeriod);
-//////////////////////////////////////////////////////
-    const introCourse = getRepository(Course).create({
-    name: "Introducao a Engenharia Naval",
-    period: firstPeriod,
-    degree: newDegree,
-    instructors: [thirdInstructor],
-    exams: [],
-  } as CreateCourse);
-  await getRepository(Course).save(introCourse);
 
-  const compCourse = getRepository(Course).create({
-    name: "Computacao 1",
-    period: firstPeriod,
-    degree: newDegree,
-    instructors: [firstInstructor, secondInstructor],
-    exams: [],
-  } as CreateCourse);
-  await getRepository(Course).save(compCourse);
-//////////////////////////////////////////////////////
-    const firstExam = getRepository(Exam).create({
-    name: "2015.1",
-    fileLink: "https://www.youtube.com/watch?v=P8Rw77yX4GA",
-    category: p1Category,
-    instructor: firstInstructor,
-    course: compCourse,
-  } as CreateExam);
-  await getRepository(Exam).save(firstExam);
+  periods.push(firstPeriod);
+  periods.push(secondPeriod);
+  periods.push(thirdPeriod);
+  periods.push(fourthPeriod);
+  periods.push(sixthPeriod);
+  periods.push(seventhPeriod);
+  periods.push(eigthPeriod);
+  periods.push(ninethPeriod);
+  periods.push(tenthPeriod);
+  periods.push(optionalPeriod);
 
-  const secondExam = getRepository(Exam).create({
-    name: "2016.1",
-    fileLink: "https://www.youtube.com/watch?v=3IvHXD7UoVI",
-    category: p1Category,
-    instructor: secondInstructor,
-    course: compCourse,
-  } as CreateExam);
-  await getRepository(Exam).save(secondExam);
-
-  const thirdExam = getRepository(Exam).create({
-    name: "2019.2",
-    fileLink: "https://www.youtube.com/watch?v=3IvHXD7UoVI",
-    category: p3Category,
-    instructor: thirdInstructor,
-    course: introCourse,
-  } as CreateExam);
-  await getRepository(Exam).save(thirdExam);
-//////////////////////////////////////////////////////
+  return periods;
 }
 
+async function fillDegrees(){
+  const degrees = []
+  const degree1 = getRepository(Degree).create({
+    name: "Engenharia Naval",
+    courses: [],
+  } as CreateDegree);
+  await getRepository(Degree).save(degree1);
+  const degree2 = getRepository(Degree).create({
+    name: "Engenharia Mecanica",
+    courses: [],
+  } as CreateDegree);
+  await getRepository(Degree).save(degree2);
+  const degree3 = getRepository(Degree).create({
+    name: "Engenharia Eletrica",
+    courses: [],
+  } as CreateDegree);
+  await getRepository(Degree).save(degree3);
+
+  degrees.push(degree1);
+  degrees.push(degree2);
+  degrees.push(degree3);
+
+  return degrees;
+}
+
+async function fillInstructors(){
+  const instructors = [];
+
+  const firstInstructor = getRepository(Instructor).create({
+    name: "Protasio",
+    exams: [],
+  } as CreateInstructor);
+  await getRepository(Instructor).save(firstInstructor);
+
+  const secondInstructor = getRepository(Instructor).create({
+    name: "Sanglard",
+    exams: [],
+  } as CreateInstructor);
+  await getRepository(Instructor).save(secondInstructor);
+
+  const thirdInstructor = getRepository(Instructor).create({
+    name: "Luiz Felipe",
+    exams: [],
+  } as CreateInstructor);
+  await getRepository(Instructor).save(thirdInstructor);
+
+  instructors.push(firstInstructor);
+  instructors.push(secondInstructor);
+  instructors.push(thirdInstructor);
+
+  return instructors
+}
