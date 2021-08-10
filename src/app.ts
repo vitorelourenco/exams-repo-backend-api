@@ -12,9 +12,6 @@ import instructorsRouter from './routers/instructorsRouter';
 import coursesRouter from "./routers/coursesRouter";
 
 export async function init(){
-  console.log(`App is running on env: ${process.env.NODE_ENV}`);
-  console.log(`Reading environment variables from: ${process.env.DOTENV_CONFIG_PATH}`);
-  console.log(`Interacting with database of URL: ${process.env.DATABASE_URL}`);
   await connectDatabase();
 }
 
