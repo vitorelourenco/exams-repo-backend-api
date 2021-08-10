@@ -1,4 +1,3 @@
-import "../../src/setup";
 import "../jestNamespace";
 
 import supertest from "supertest";
