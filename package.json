@@ -35,7 +35,6 @@
     "@aws-sdk/node-http-handler": "^3.3.0",
     "aws-sdk": "^2.955.0",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "joi": "^17.4.1",
     "pg": "^8.7.1",
