@@ -8,7 +8,7 @@
     "build": "npx tsc --outDir dist",
     "start": "NODE_ENV=production node dist/server.js",
     "postinstall": "npm run build",
-    "dev": "NODE_ENV=dev DOTENV_CONFIG_PATH=.env npx -n='r dotenv/config' nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
+    "dev": "NODE_ENV=dev DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
   },
   "keywords": [],
   "author": "",
