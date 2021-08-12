@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test npx jest -i",
+    "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test npx -n='-r dotenv/config' jest -i",
     "build": "npx tsc --outDir dist",
     "start": "NODE_ENV=production node dist/server.js",
     "postinstall": "npm run build",
-    "dev": "NODE_ENV=dev npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
+    "dev": "NODE_ENV=dev DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
   },
   "keywords": [],
   "author": "",
@@ -22,6 +22,7 @@
     "@types/node": "^16.3.3",
     "@types/pg": "^8.6.1",
     "@types/supertest": "^2.0.11",
+    "dotenv": "^10.0.0",
     "faker": "^5.5.3",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12",
@@ -35,7 +36,6 @@
     "@aws-sdk/node-http-handler": "^3.3.0",
     "aws-sdk": "^2.955.0",
     "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "joi": "^17.4.1",
     "pg": "^8.7.1",
