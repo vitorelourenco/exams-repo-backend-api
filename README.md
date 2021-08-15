@@ -49,12 +49,12 @@ $ npm run build
 npm run typeorm migration:run
 ```
 - Create a .env file following the template provided in .env.example , you can leave the port as is but please remember to use your postgres password in the database url. Also, the upload feature won't work without an AWS setup. You can learn how to make your own AWS s3 bucket [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html) and you can learn how to sign put requests [here](https://docs.aws.amazon.com/AmazonS3/latest/userguide/RESTAuthentication.html) . The signing code is already baked in but you'll need credentials either way. Learn how to create your AWS keys [here](https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/)
-- Repeat the step above for a .env.example file. Please read the documentation provided by the DOTENV people on why you shouldn't normally have two .env files [here](https://www.npmjs.com/package/dotenv) . It is not an issue for this project. 
+- Repeat the step above for a .env.test file. Please read the documentation provided by the DOTENV people on why you shouldn't normally have two .env files [here](https://www.npmjs.com/package/dotenv) . It is not an issue for this project. 
 
 
 ## Running the app in dev mode
 ```bash
-$ npm start 
+$ npm run dev 
 ```
 
 ## Running tests
@@ -62,9 +62,14 @@ $ npm start
 $ npm run test
 ```
 
-## Build
+## Building
 ```bash
 $ npm run build
+```
+
+## Running Build
+```bash
+$ npm start
 ```
 
 ## Author
