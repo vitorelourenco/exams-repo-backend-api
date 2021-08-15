@@ -5,7 +5,6 @@ import CreateDegree from "../../src/protocols/CreateDegree";
 import Category from "../../src/entities/Category";
 import CreateCategory from "../../src/protocols/CreateCategory";
 import Instructor from "../../src/entities/Instructor";
-import CreateInstructor from "../../src/protocols/CreateInstructor";
 import Period from "../../src/entities/Period";
 import CreatePeriod from "../../src/protocols/CreatePeriod";
 import { createExam } from "../factories/examFactory";
