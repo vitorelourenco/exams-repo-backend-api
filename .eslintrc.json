@@ -23,7 +23,8 @@
 				"js": "never",
 				"jsx": "never",
 				"ts": "never",
-				"tsx": "never"
+				"tsx": "never",
+        "json": "always"
 			}
 		],
 		"indent": ["error", "tab"],

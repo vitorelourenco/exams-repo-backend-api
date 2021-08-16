@@ -5,7 +5,7 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run pretest"
+      "pre-commit": "lint-staged"
     }
   },
   "scripts": {
@@ -13,8 +13,7 @@
     "build": "npx tsc --outDir dist",
     "start": "NODE_ENV=production node dist/server.js",
     "postinstall": "npm run build",
-    "dev": "NODE_ENV=dev DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\"",
-    "pretest": "npx eslint \"./**\" --fix"
+    "dev": "NODE_ENV=dev DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
   },
   "keywords": [],
   "author": "",
@@ -39,6 +38,7 @@
     "faker": "^5.5.3",
     "husky": "^7.0.1",
     "jest": "^27.0.6",
+    "lint-staged": "^11.1.2",
     "nodemon": "^2.0.12",
     "supertest": "^6.1.3",
     "ts-jest": "^27.0.3",

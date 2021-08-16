@@ -2,9 +2,6 @@ import app, { init } from './app';
 
 const { PORT } = process.env;
 
-
-
-
 init()
 	.then(() => {
 		app.listen(PORT, () => {
@@ -12,3 +9,4 @@ init()
 		});
 	})
 	.catch((err) => console.log(`Server failed to start \r\n${err}`));
+fdfsfds
