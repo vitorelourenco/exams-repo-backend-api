@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test npx -n='-r dotenv/config' jest -i",
+    "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' jest -i",
     "build": "npx tsc --outDir dist",
     "start": "NODE_ENV=production node dist/server.js",
     "postinstall": "npm run build",
