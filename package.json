@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "scripts": {
     "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' jest -i",
     "build": "npx tsc --outDir dist",
