@@ -7,8 +7,6 @@ import CreateCourse from '../../src/protocols/CreateCourse';
 import Period from '../../src/entities/Period';
 import Degree from '../../src/entities/Degree';
 
-banana
-
 export async function createCourse(params: {
 	name: string;
 	instructors: Instructor[];
