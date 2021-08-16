@@ -1,6 +1,8 @@
-import Exam from "../entities/Exam";
+import Exam from '../entities/Exam';
 
-export default interface CreateCategory{
+interface CreateCategory{
   name: string;
   exams: Exam[];
 }
+
+export default CreateCategory;

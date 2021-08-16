@@ -1,10 +1,13 @@
-import { ManyToOne, Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from "typeorm";
-import Course from "./Course";
-import Instructor from "./Instructor";
-import Category from "./Category"
+/* eslint-disable import/no-cycle */
+import {
+	ManyToOne, Entity, PrimaryGeneratedColumn, Column,
+} from 'typeorm';
+import Course from './Course';
+import Instructor from './Instructor';
+import Category from './Category';
 
-@Entity("exams")
-export default class Exam{
+@Entity('exams')
+export default class Exam {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,13 +17,12 @@ export default class Exam{
   @Column()
   fileLink: string;
 
-  @ManyToOne(()=> Instructor, instructor => instructor.exams)
+  @ManyToOne(() => Instructor, (instructor) => instructor.exams)
   instructor: Instructor;
 
-  @ManyToOne(()=> Course, course => course.exams)
+  @ManyToOne(() => Course, (course) => course.exams)
   course: Course;
 
-  @ManyToOne(()=> Category, category => category.exams)
+  @ManyToOne(() => Category, (category) => category.exams)
   category: Category;
-
 }

@@ -1,14 +1,15 @@
-import { OneToMany, Entity, PrimaryGeneratedColumn, Column } from "typeorm";
-import Course from "./Course";
+/* eslint-disable import/no-cycle */
+import { OneToMany, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import Course from './Course';
 
-@Entity("periods")
-export default class Period{
-  @PrimaryGeneratedColumn()
-  id: number;
+@Entity('periods')
+export default class Period {
+	@PrimaryGeneratedColumn()
+	id: number;
 
-  @Column()
-  name: string;
+	@Column()
+	name: string;
 
-  @OneToMany(() => Course, course => course.period)
-  courses: Course[];
+	@OneToMany(() => Course, (course) => course.period)
+	courses: Course[];
 }

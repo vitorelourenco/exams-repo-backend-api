@@ -1,6 +1,8 @@
-import Course from "../entities/Course";
+import Course from '../entities/Course';
 
-export default interface CreatePeriod{
+interface CreatePeriod{
   name:string;
   courses: Course[];
 }
+
+export default CreatePeriod;

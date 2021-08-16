@@ -3,18 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pretest"
+    }
+  },
   "scripts": {
     "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' jest -i",
     "build": "npx tsc --outDir dist",
     "start": "NODE_ENV=production node dist/server.js",
     "postinstall": "npm run build",
-    "dev": "NODE_ENV=dev DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
+    "dev": "NODE_ENV=dev DOTENV_CONFIG_PATH=.env npx -n='-r dotenv/config' nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\"",
+    "pretest": "./node_modules/.bin/eslint --ignore-path .gitignore . --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@aws-sdk/types": "^3.3.0",
+    "@jest/globals": "^27.0.6",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/faker": "^5.5.7",
@@ -22,8 +29,15 @@
     "@types/node": "^16.3.3",
     "@types/pg": "^8.6.1",
     "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
     "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.0",
     "faker": "^5.5.3",
+    "husky": "^7.0.1",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12",
     "supertest": "^6.1.3",

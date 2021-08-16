@@ -1,6 +1,8 @@
-import Course from "../entities/Course";
+import Course from '../entities/Course';
 
-export default interface CreateDegree{
+interface CreateDegree{
   name: string;
   courses: Course[];
 }
+
+export default CreateDegree;

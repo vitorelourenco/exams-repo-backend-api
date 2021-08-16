@@ -1,6 +1,8 @@
-import Exam from "../entities/Exam";
+import Exam from '../entities/Exam';
 
-export default interface CreateInstructor{
+interface CreateInstructor{
   name: string;
   exams: Exam[];
 }
+
+export default CreateInstructor;
