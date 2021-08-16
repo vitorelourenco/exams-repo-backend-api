@@ -1,4 +1,4 @@
 {
-  "*.ts": ["npx eslint \"./**\" --fix"],
-  "*.js": ["npx eslint \"./**\" --fix"]
+  "*.ts": ["npx eslint \"./**\" --fix", "git add"],
+  "*.js": ["npx eslint \"./**\" --fix", "git add"]
 }

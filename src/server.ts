@@ -9,8 +9,3 @@ init()
 		});
 	})
 	.catch((err) => console.log(`Server failed to start \r\n${err}`));
-fdfsfdsffsdghdfgdfgdffdsfdsfdsfdsgdfgdfgdfgdfgdf;;;;
-;fds;f;ds
-
-
-fdsfsddfgdfgdfgdfgdf
