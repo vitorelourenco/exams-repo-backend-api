@@ -73,15 +73,9 @@ $ npm run dev
 $ npm run test
 ```
 
-## Build
+## Building
 ```bash
 $ npm run build
-```
-
-## Running the built app
-(the build will not include .env files)
-```bash
-$ npm start
 ```
 
 ## Author
@@ -100,7 +94,9 @@ $ npm start
 
 ## 🤝 Contributing
 
-You can take a look at the Possible Future Features session and open a PR that implements them. You can also suggest other features. Feel free to check out the [issues page](https://github.com/vitorelourenco/my-wallet-back/issues).
+- You can take a look at the Possible Future Features session and open a PR that implements them.
+- You can also suggest other features. 
+- Feel free to check out the [issues page](https://github.com/vitorelourenco/my-wallet-back/issues).
 
 ## Show your support
 
